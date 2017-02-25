@@ -1,0 +1,66 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"> </script>
+</head>
+<body>
+<!-- Main Div Holding our Application Data -->
+HARI'S NOTE EDITOR WEB APP <br><br>
+<div id="notes">
+  <!-- Panel for holding our input -->
+    <input type="text" placeholder="Enter notes here?" autofocus class="text-input" v-model="newNote" v-on:keyup.enter="addNote">
+
+  <!-- Unorderd list for holding our notes -->
+  <ul>
+
+    <li v-for="Note in NoteList">
+
+
+      <label for="text">{{ Note.text }}</label>
+
+      <button v-on:click="removeNote(Note)">delete</button>
+
+    </li>
+
+  </ul>
+
+ </div>
+<script>
+//Create a new Vue instance
+new Vue({
+
+  //Binding Vue instance to our container div with an ID of notes
+  el: "#notes",
+
+  //This is where the data for our application will be held
+  data: {
+    newNote: "",
+    NoteList: []
+  },
+
+  //This is where we will register the methods we want to use in our application
+  methods: {
+
+    addNote: function() {
+      //trim() is used to remove whitespace from both ends of a string
+      var Note = this.newNote.trim();
+      //if Note is not an empty string
+      if (Note) {
+        //Push an object containing the Note to the NoteList array
+        this.NoteList.push({
+          text: Note,
+          checked: false
+        });
+        //Reset newNote to an empty string so the input field is cleared
+        this.newNote = "";
+      }
+    },
+
+    removeNote: function(Note) {
+      var index = this.NoteList.indexOf(Note);
+      this.NoteList.splice(index, 1);
+    }
+  }
+});
+</script>
+</body>
+</html>
